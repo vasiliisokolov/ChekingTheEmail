@@ -12,17 +12,18 @@ int main()
     std::cout << "Enter you email :\n";
     std::cin >> email;
 
-    if (email.find("@") == -1 || email.find("@") != email.rfind("@") 
+    if (email.find("@") == -1 || email.find("@") != email.rfind("@")
         || email[0] == '.' || email[email.length() - 1] == '.' || email.find("..") != -1)
     {
         right = false;
-    } 
-        
-    if (first_part_check(email) && second_part_check(email) && right)
-    {
-        std::cout << "Valid\n";
     }
-    else std::cout << "Invalid!\n";
+    else if (first_part_check(email) && second_part_check(email))
+    {
+        right = true;
+    }
+    else right = false;
+    
+    std::cout << (right ? "Valid\n" : "Invalid!\n");
 
 }
 
@@ -30,7 +31,7 @@ bool first_part_check(std::string email)
 {    
     int i = email.find("@");
     std::string firstPart = email.substr(0, email.length() - (email.length() - i));
-    std::string library = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&'*+-/=?^_`{|}~.";
+    std::string library = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!#$%&'*+-/=?^_`{|}~.";
     
     if (email.length() > 64 || email.length() < 1)
     {
@@ -46,7 +47,7 @@ bool second_part_check(std::string email)
 {
     int i = email.find("@");
     std::string secondPart = email.substr(i + 1, email.length() - i);
-    std::string library = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.-";
+    std::string library = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.-";
     
     if (secondPart.length() < 0 || secondPart.length() > 63)
     {
@@ -60,6 +61,10 @@ bool second_part_check(std::string email)
 
 bool search_library(std::string text, std::string library)
 {
-    return false;
-}
+    for (int i = 0; i < text.length(); i++)
+    {
+       if (library.find(text[i]) == -1) return false;
+    }
+    return true;
+} 
 
