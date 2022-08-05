@@ -64,6 +64,7 @@ bool search_library(std::string text, std::string library)
     for (int i = 0; i < text.length(); i++)
     {
        if (library.find(text[i]) == -1) return false;
+
     }
     return true;
 } 
